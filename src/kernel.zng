@@ -1,0 +1,38 @@
+struct BOOTBOOT packed {
+i8[4] magic;
+i32 size;
+i8 protocol;
+i8 fb_type;
+i16 num_cores;
+i16 bspid;
+i16 timezone;
+i8[8] datetime;
+i64 initrd_ptr;
+i64 initrd_size;
+i32 *fb_ptr;
+i32 fb_size;
+i32 fb_width;
+i32 fb_height;
+i32 fb_scanline;
+i64[8] x86_64_specific;
+}
+
+extern var BOOTBOOT boot_info;
+extern var i8[4096] env;
+extern var i8 fb;
+
+fn _start() {
+var int h = boot_info.fb_height;
+var int w = boot_info.fb_width;
+
+var i32 *framebuffer = &fb;
+*framebuffer = 16777215;
+
+for (var int x = 0; x < h; x = x + 1) {
+	var i32 *px = &fb + (boot_info.fb_scanline) * x + (w * 2);
+	*px = 16777215;
+}
+
+while (true) {}
+return;
+}

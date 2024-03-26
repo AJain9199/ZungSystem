@@ -1,0 +1,11 @@
+{
+	"config": "envfile",
+	"initrd": {
+		"directory": "build/initrd",
+		"type" : "tar"
+	},
+	"partitions": [
+		{"type": "boot", "size": 16}
+	]
+}
+
